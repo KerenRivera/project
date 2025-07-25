@@ -1,0 +1,6 @@
+@SIGEBI.api_HostAddress = http://localhost:5229
+
+GET {{SIGEBI.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

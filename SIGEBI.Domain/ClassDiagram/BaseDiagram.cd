@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SIGEBI.Domain.Base.AuditEntity&lt;TKey&gt;">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgEAAAAAAACAAAACAAAAAAAAAAAAAAAAAAAQAAAAE=</HashCode>
+      <FileName>Base\AuditEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Authors">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAgAAAAgAAAAQAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Entities\Authors.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.BookAuthor">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAAABAgAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Entities\BookAuthor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Books" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="SIGEBI.Domain.Base.AuditEntity&lt;TKey&gt;" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="2" />
+        <Point X="6.75" Y="0.875" />
+        <Point X="5.5" Y="0.875" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAKCAAAACQAAgkAAiAAIQAAAAQAAAAAAAAAAEAQACAA=</HashCode>
+      <FileName>Entities\Books.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Categories" Collapsed="true">
+    <Position X="4" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAgAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Categories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.LoanHistory" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAECAAAAAAAACAAAAAAAAgAQAAAAAAgAABAAAAAAAA=</HashCode>
+      <FileName>Entities\LoanHistory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Loans" Collapsed="true">
+    <Position X="8" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAADCAAAAAAAACBAAAAAAAgAQAAAAEAAAAAAAAAAAQA=</HashCode>
+      <FileName>Entities\Loans.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.LoginHistory">
+    <Position X="10.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAQAAAEAECAAAgAIAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Entities\LoginHistory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Notifications" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAgABAAAAAAEAgAAAAAAACAAAAAIAAAAAA=</HashCode>
+      <FileName>Entities\Notifications.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Publishers" Collapsed="true">
+    <Position X="6" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAgAAAAAAAQAQAAQAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Publishers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.ReservationHistory" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAECAAAgAABAAAAAAAAAAgAQAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ReservationHistory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Reservations" Collapsed="true">
+    <Position X="10" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAgAABAAAAAAAAAAgAQAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Reservations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Roles">
+    <Position X="8" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Entities\Roles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Sanctions" Collapsed="true">
+    <Position X="1.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAEAACIAAAAAAAgCAAAAAAAAAAAAAAAIkAA=</HashCode>
+      <FileName>Entities\Sanctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.SpecialMaterials" Collapsed="true">
+    <Position X="1.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAgAAAAgAAAAAgQAAAAAAAAAAAAAAAAQAg=</HashCode>
+      <FileName>Entities\SpecialMaterials.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.SystemSettings" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABABAAgAAAIAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Entities\SystemSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Entities.Users" Collapsed="true">
+    <Position X="10.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAQAAAAAAIAAEAAAAAAAAQAAAAAAAAAAEAAgAAA=</HashCode>
+      <FileName>Entities\Users.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SIGEBI.Domain.Base.BaseEntity&lt;TKey&gt;" Collapsed="true">
+    <Position X="7.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
