@@ -102,15 +102,17 @@ namespace SIGEBI.Persistence.Repositories
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error while executing ToListAsync on reservations query");
-                    throw;
+                    return OperationResult.Failure("Database query failed: " + ex.Message);
                 }
-                
-                return OperationResult.Success("No reservations found.", reservations ?? new List<Reservation>());
-                
 
-                //_logger.LogInformation("Reservations retrieved successfully: {@Data}", reservations);
+                if (reservations == null || !reservations.Any())
+                {
+                    _logger.LogInformation("No reservations found matching the criteria.");
+                    return OperationResult.Success("No reservations found.", new List<Reservation>());
+                }
 
-                //return OperationResult.Success("Reservations retrieved successfully.", reservations);
+                _logger.LogInformation("Retrieved {Count} reservations successfully.", reservations.Count);
+                return OperationResult.Success("Reservations retrieved successfully.", reservations);
             }
             catch (Exception ex)
             {

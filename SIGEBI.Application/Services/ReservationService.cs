@@ -82,18 +82,24 @@ namespace SIGEBI.Application.Services
                 return result;
             }
 
-            if (result.Data == null)
+            var reservations = result.Data as IEnumerable<Reservation>;
+            if (reservations == null)
             {
-                return OperationResult.Failure("No reservations found.");
+                return OperationResult.Failure("Invalid data type returned from repository.");
             }
 
-            var reservations = (result.Data as IEnumerable<Reservation>) ?? new List<Reservation>();
+            var reservationList = reservations.ToList();
+            if (!reservationList.Any())
+            {
+                return OperationResult.Success("No reservations found.", new List<ReservationDto>());
+            }
 
             var dtoList = new List<ReservationDto>();
 
             foreach (var r in reservations)
             {
                 var statusName = r.StatusId != 0 ? await _reservationStatusesRepository.GetStatusNameByIdAsync(r.StatusId) ?? "Estado desconocido" : "Estado desconocido";
+
                 dtoList.Add(new ReservationDto
                 {
                     ReservationId = r.Id,
