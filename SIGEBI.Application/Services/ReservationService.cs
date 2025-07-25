@@ -73,46 +73,17 @@ namespace SIGEBI.Application.Services
             return await _reservationRepository.UpdateAsync(reservationToDelete);
         } //funciona
 
-        public async Task<OperationResult> GetAllReservationsAsync(Expression<Func<Reservation, bool>> filter = null) //terminar de modificar
+        public async Task<OperationResult> GetAllReservationsAsync(Expression<Func<Reservation, bool>> filter = null)
         {
+            if (_reservationRepository == null)
+            {
+                throw new InvalidOperationException("Reservation repository is not initialized.");
+            }
+
             var result = await _reservationRepository.GetAllAsync(filter);
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var reservations = result.Data as IEnumerable<Reservation>;
-            if (reservations == null)
-            {
-                return OperationResult.Failure("Invalid data type returned from repository.");
-            }
-
-            var reservationList = reservations.ToList();
-            if (!reservationList.Any())
-            {
-                return OperationResult.Success("No reservations found.", new List<ReservationDto>());
-            }
-
-            var dtoList = new List<ReservationDto>();
-
-            foreach (var r in reservations)
-            {
-                var statusName = r.StatusId != 0 ? await _reservationStatusesRepository.GetStatusNameByIdAsync(r.StatusId) ?? "Estado desconocido" : "Estado desconocido";
-
-                dtoList.Add(new ReservationDto
-                {
-                    ReservationId = r.Id,
-                    UserName = r.User?.FullName ?? "Usuario desconocido",
-                    BookTitle = r.Book?.Title ?? "Titulo desconocido",
-                    ReservationDate = r.ReservationDate,
-                    ExpirationDate = r.ExpirationDate,
-                    StatusName = statusName ?? "Estado desconocido",
-                });
-            }
-
-            return OperationResult.Success("Reservations retrieved successfully.", dtoList);
+            return result;
         }
+        
 
         public Task<OperationResult> GetReservationByIdAsync(int id)
         {
@@ -124,60 +95,61 @@ namespace SIGEBI.Application.Services
             return _reservationRepository.GetByIdAsync(id);
         } //funciona
 
-        public async Task<OperationResult> UpdateReservationAsync(UpdateReservationRequestDto request) //chequear si funciona pero antes chequear el metodo en el repo
+        public async Task<OperationResult> UpdateReservationAsync(UpdateReservationRequestDto request)
         {
             if (request == null)
             {
-                throw new ArgumentNullException(nameof(request), "Reservation request cannot be null.");
+                return OperationResult.Failure("Reservation request cannot be null.");
             }
 
             var validationContext = new ValidationContext(request);
             var validationResults = new List<ValidationResult>();
             if (!Validator.TryValidateObject(request, validationContext, validationResults, true))
             {
-                return OperationResult.Failure("Invalid reservation request.", validationResults);
+                var errors = string.Join(", ", validationResults.Select(v => v.ErrorMessage));
+                return OperationResult.Failure($"Invalid reservation request: {errors}");
             }
 
-            // buscamos la reserva existente
-
-            var Result = await _reservationRepository.GetByIdAsync(request.ReservationId);
-
-            if (!Result.IsSuccess || Result.Data is not Reservation existingReservation)
+            var result = await _reservationRepository.GetByIdAsync(request.ReservationId);
+            if (!result.IsSuccess || result.Data is not Reservation existingReservation)
             {
                 return OperationResult.Failure("Reservation not found.");
             }
 
-            //verificamos que el libro este disponible (en este caso siempre lo estara)
+            existingReservation.BookId = request.BookId;
 
-            bool isAvailable = await _bookService.IsBookAvailableAsync(request.BookId); // verificar
+            if (existingReservation.GetType().GetProperty("UpdatedAt") != null)
+                existingReservation.GetType().GetProperty("UpdatedAt")?.SetValue(existingReservation, DateTime.UtcNow);
+            
 
-            if (isAvailable)
-            {
-                return OperationResult.Failure("The book is not available for reservation.");
-            }
-
-            var reservation = (Reservation)Result.Data;
-
-            reservation.BookId = request.BookId;
-
-            existingReservation.UpdatedAt = DateTime.UtcNow;
-
-            var validationResult = ReservationValidator.ValidateReservation(reservation);
+            var validationResult = ReservationValidator.ValidateReservation(existingReservation);
             if (!validationResult.IsSuccess)
             {
                 return validationResult;
             }
-            return await _reservationRepository.UpdateAsync(reservation);
 
-            var status = await _reservationStatusesRepository.GetStatusNameByIdAsync(existingReservation.StatusId);
+            var updateResult = await _reservationRepository.UpdateAsync(existingReservation);
+            if (!updateResult.IsSuccess)
+            {
+                return updateResult;
+            }
+
+            var updatedReservation = updateResult.Data as Reservation;
+            if (updatedReservation == null)
+            {
+                return OperationResult.Failure("Error retrieving updated reservation.");
+            }
+
+            var status = await _reservationStatusesRepository.GetStatusNameByIdAsync(updatedReservation.StatusId);
 
             var response = new ReservationUpdateResponseDto
             {
-                ReservationId = existingReservation.Id,
-                BookId = existingReservation.BookId,
-                StatusName = status,
-                UpdatedAt = (DateTime)existingReservation.UpdatedAt
+                ReservationId = updatedReservation.Id,
+                BookId = updatedReservation.BookId,
+                StatusName = status ?? "Estado desconocido",
+                UpdatedAt = updatedReservation.UpdatedAt ?? DateTime.UtcNow
             };
+
             return OperationResult.Success("Reservation updated successfully.", response);
         }
     }
