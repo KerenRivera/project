@@ -197,6 +197,7 @@ namespace SIGEBI.Persistence.Repositories
                 existingReservation.UserId = entity.UserId;
                 existingReservation.StatusId = entity.StatusId;
                 existingReservation.ReservationDate = entity.ReservationDate;
+
                 existingReservation.UpdatedAt = entity.UpdatedAt;
 
 
